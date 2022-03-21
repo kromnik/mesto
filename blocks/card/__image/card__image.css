@@ -1,0 +1,11 @@
+.card__image {
+  max-width: 282px;
+  max-height: 282px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  object-fit: cover;
+  object-position: center;
+  overflow: hidden;
+  border: none;
+}
