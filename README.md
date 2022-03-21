@@ -15,4 +15,4 @@
 
 ## Ссылка на проект 
 
-  [https://github.com/kromnik/mesto.git]
+  [https://kromnik.github.io/mesto/]
