@@ -1,6 +1,6 @@
 .card__image {
-  max-width: 282px;
-  max-height: 282px;
+  min-width: 282px;
+  min-height: 282px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;

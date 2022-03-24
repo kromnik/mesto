@@ -26,12 +26,20 @@
           <div class="profile__profile-info">
             <h1 class="profile__profile-info-username">Жак-Ив Кусто</h1>
             <p class="profile__profile-info-username-info">Исследователь океана</p>
-            <button class="profile__edit-button" type="button" aria-label="Редактировать"></button>
+            <button
+              class="profile__edit-button"
+              type="button"
+              aria-label="Редактировать"
+            ></button>
           </div>
-          <button class="profile__add-button" type="button" aria-label="Добавить"></button>
+          <button
+            class="profile__add-button"
+            type="button"
+            aria-label="Добавить"
+          ></button>
         </section>
         <section class="elements">
-          <div class="card">
+          <article class="card">
             <img
               class="card__image"
               src="./images/card/card-karachaevsk.jpg"
@@ -41,8 +49,8 @@
               <h2 class="card__title">Карачаевск</h2>
               <button class="card__icon" type="button"></button>
             </div>
-          </div>
-          <div class="card">
+          </article>
+          <article class="card">
             <img
               class="card__image"
               src="./images/card/card-elbrus.jpg"
@@ -52,8 +60,8 @@
               <h2 class="card__title">Гора Эльбрус</h2>
               <button class="card__icon" type="button"></button>
             </div>
-          </div>
-          <div class="card">
+          </article>
+          <article class="card">
             <img
               class="card__image"
               src="./images/card/card-dombay.jpg"
@@ -63,8 +71,8 @@
               <h2 class="card__title">Домбай</h2>
               <button class="card__icon" type="button"></button>
             </div>
-          </div>
-          <div class="card">
+          </article>
+          <article class="card">
             <img
               class="card__image"
               src="./images/card/card-elbrus.jpg"
@@ -74,8 +82,8 @@
               <h2 class="card__title">Гора Эльбрус</h2>
               <button class="card__icon" type="button"></button>
             </div>
-          </div>
-          <div class="card">
+          </article>
+          <article class="card">
             <img
               class="card__image"
               src="./images/card/card-dombay.jpg"
@@ -85,8 +93,8 @@
               <h2 class="card__title">Домбай</h2>
               <button class="card__icon" type="button"></button>
             </div>
-          </div>
-          <div class="card">
+          </article>
+          <article class="card">
             <img
               class="card__image"
               src="./images/card/card-karachaevsk.jpg"
@@ -96,20 +104,36 @@
               <h2 class="card__title">Карачаево-Черкессия</h2>
               <button class="card__icon" type="button"></button>
             </div>
-          </div>
+          </article>
         </section>
       </main>
       <footer class="footer">
-        <p class="footer">&copy;2022 Mesto Russia</p>
+        <p class="footer__copyright">&copy;2022 Mesto Russia</p>
       </footer>
       <div class="popup">
         <div class="popup__container">
           <button class="popup__close-button" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form">
-            <input class="popup__username" type="text"  value="" />
-            <input class="popup__username-info" type="text" value="" />
-            <button class="popup__submit-button" type="submit">Сохранить</button>
+          <form class="popup__form" name="popupForm">
+            <input
+              class="popup__userinfo popup__userinfo_info_username"
+              type="text"
+              name="userName"
+              required
+              placeholder="Ваше имя"
+              value=""
+            />
+            <input
+              class="popup__userinfo popup__userinfo_info_username-info"
+              type="text"
+              name="userNameInfo"
+              required
+              placeholder="О себе"
+              value=""
+            />
+            <button class="popup__submit-button" type="submit">
+              Сохранить
+            </button>
           </form>
         </div>
       </div>
