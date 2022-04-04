@@ -6,11 +6,11 @@ const popupZoomImage = document.querySelector('.popup_zoom-photo');
 
 // кнопки
 
-const openPopupEditBtn = document.querySelector('.profile__edit-button');
-const openPopupAddBtn = document.querySelector('.profile__add-button');
-const closePopupEditBtn = popupEditProfile.querySelector('.popup__close-button_type_edit');
-const closePopupAddBtn = popupAddCard.querySelector('.popup__close-button_type_add');
-const closePopupZoomBtn = popupZoomImage.querySelector('.popup__close-button_type_zoom');
+const popupOpenEditBtn = document.querySelector('.profile__edit-button');
+const popupOpenAddBtn = document.querySelector('.profile__add-button');
+const popupCloseEditBtn = popupEditProfile.querySelector('.popup__close-button_type_edit');
+const popupCloseAddBtn = popupAddCard.querySelector('.popup__close-button_type_add');
+const popupCloseZoomBtn = popupZoomImage.querySelector('.popup__close-button_type_zoom');
 
 
 // редактирование профиля  и добавление карточки
@@ -44,7 +44,7 @@ function createCard (card) {
   const elementCardDelete = elementCard.querySelector('.card__btn-del');
   elementCardImage.src = card.link;
   elementCardTitle.textContent = card.name;
-  elementCardLikeIcon.addEventListener('click', () => cardLikeIcon(elementCardLikeIcon));
+  elementCardLikeIcon.addEventListener('click', () => likeCardIcon(elementCardLikeIcon));
   elementCardDelete.addEventListener('click', () => deleteCard(elementCardDelete));
   elementCardImage.addEventListener('click', () => openPopupZoomImage(card));
   return elementCard;
@@ -56,7 +56,7 @@ const renderCard = card => cardElements.prepend(card);
 
 // лайк карточек
 
-function cardLikeIcon(elementCardLikeIcon) {
+function likeCardIcon(elementCardLikeIcon) {
   elementCardLikeIcon.classList.toggle('card__like-icon_action_like');
 }
 
@@ -116,20 +116,20 @@ function submitFormAddCard (evt) {
 formElementEditProfile.addEventListener('submit', submitFormEditProfile);
 formElementAddCard.addEventListener('submit', submitFormAddCard);
 
-openPopupEditBtn.addEventListener ('click', function () {
+popupOpenEditBtn.addEventListener ('click', function () {
   openPopupProfile(popupEditProfile);
 });
-openPopupAddBtn.addEventListener ('click', function () {
+popupOpenAddBtn.addEventListener ('click', function () {
   openPopup(popupAddCard);
 });
 
-closePopupEditBtn.addEventListener ('click', function () {
+popupCloseEditBtn.addEventListener ('click', function () {
   closePopup(popupEditProfile);
 });
-closePopupAddBtn.addEventListener ('click', function () {
+popupCloseAddBtn.addEventListener ('click', function () {
   closePopup(popupAddCard);
 });
-closePopupZoomBtn.addEventListener ('click', function () {
+popupCloseZoomBtn.addEventListener ('click', function () {
   closePopup(popupZoomImage);
 });
 
