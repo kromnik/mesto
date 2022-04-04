@@ -1,4 +1,4 @@
-.profile__profile-info-username-info {
+.profile__profile-info-user-about {
   grid-area: p;
   max-width: 100%;
   margin: 0;
@@ -15,7 +15,7 @@
 }
 
 @media screen and (max-width: 1279px) {
-  .profile__profile-info-username-info {
+  .profile__profile-info-user-about {
     font-size: 14px;
     line-height: 17px;
     text-align: center;
