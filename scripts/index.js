@@ -3,6 +3,7 @@
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddCard = document.querySelector('.popup_add-card');
 const popupZoomImage = document.querySelector('.popup_zoom-photo');
+const popupList = Array.from(document.querySelectorAll('.popup'));
 
 // кнопки
 
@@ -11,7 +12,9 @@ const popupOpenAddBtn = document.querySelector('.profile__add-button');
 const popupCloseEditBtn = popupEditProfile.querySelector('.popup__close-button_type_edit');
 const popupCloseAddBtn = popupAddCard.querySelector('.popup__close-button_type_add');
 const popupCloseZoomBtn = popupZoomImage.querySelector('.popup__close-button_type_zoom');
-
+const ESC_KEY = "Escape";
+const buttonSubmitTypeEdit = popupEditProfile.querySelector('.popup__submit-button_type_edit');
+const buttonSubmitTypeAdd = popupAddCard.querySelector('.popup__submit-button_type_add');
 
 // редактирование профиля  и добавление карточки
 
@@ -67,20 +70,17 @@ function deleteCard(elementCardDelete) {
   elementCard.remove();
 }
 
-// функции открытия и закрытия попапов
+// функции открытия попапов
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  
+  document.addEventListener('keyup', onDocumentKeyUp);
 }  
-
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-}
 
 function openPopupProfile() {
   usernameInput.value = profileUsername.textContent;
   userAboutInput.value = profileUserAbout.textContent;
+  enableButtonSubmit(buttonSubmitTypeEdit);
   openPopup(popupEditProfile);
 }
 
@@ -90,9 +90,33 @@ function openPopupZoomImage(card) {
   openPopup(popupZoomImage);
 }
 
-// функция редактирование попапа профиля
+//  функции закрытия попапов
 
-function submitFormEditProfile (evt) {
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keyup', onDocumentKeyUp);
+}
+
+// закрытие на оверлэй
+
+const handleOverlayClose = (evt) => {
+  if (evt.target.classList.contains('popup_opened')) {
+    closePopup(evt.target);
+  }
+};
+
+// закрытие на ESC
+
+function onDocumentKeyUp(evt){
+  if (evt.key === ESC_KEY) {
+    const currentPopup = document.querySelector('.popup_opened');
+    closePopup(currentPopup);  
+  }
+}
+
+// функция редактирование попапа профиля 
+
+function submitFormEditProfile(evt) {
   evt.preventDefault();
   profileUsername.textContent = usernameInput.value;
   profileUserAbout.textContent = userAboutInput.value;
@@ -101,7 +125,7 @@ function submitFormEditProfile (evt) {
 
 // функция  ввода данных через попап и добавления карточки
 
-function submitFormAddCard (evt) {
+function submitFormAddCard(evt) {
   evt.preventDefault();
   const card = { 
     name: cardNameInput.value, 
@@ -111,38 +135,31 @@ function submitFormAddCard (evt) {
   cardNameInput.value = '';
   cardLinkInput.value = '';
   closePopup(popupAddCard);
+  disableButtonSubmit(buttonSubmitTypeAdd);
 }
+
+popupList.forEach((popupElement) => {
+  popupElement.addEventListener('mousedown', (evt) => handleOverlayClose(evt));
+});
 
 formElementEditProfile.addEventListener('submit', submitFormEditProfile);
 formElementAddCard.addEventListener('submit', submitFormAddCard);
 
-popupOpenEditBtn.addEventListener ('click', function () {
+popupOpenEditBtn.addEventListener('click', function () {
   openPopupProfile(popupEditProfile);
 });
-popupOpenAddBtn.addEventListener ('click', function () {
+popupOpenAddBtn.addEventListener('click', function () {
   openPopup(popupAddCard);
 });
 
-popupCloseEditBtn.addEventListener ('click', function () {
+popupCloseEditBtn.addEventListener('click', function () {
   closePopup(popupEditProfile);
 });
 popupCloseAddBtn.addEventListener ('click', function () {
   closePopup(popupAddCard);
 });
-popupCloseZoomBtn.addEventListener ('click', function () {
+popupCloseZoomBtn.addEventListener('click', function () {
   closePopup(popupZoomImage);
 });
 
 initialCards.forEach(card => renderCard(createCard(card)));
-
-
-// const ESC_KEY = 'Escape';
-
-// function onDocumentKeyUp(event) {
-//   if (event.key === ESC_KEY) {
-//       popupClose();
-//   }
-// }
-
-// document.addEventListener('keyup', onDocumentKeyUp);
-// document.removeEventListener('keyup', onDocumentKeyUp);

@@ -48,23 +48,33 @@
         <div class="popup__container">
           <button class="popup__close-button  popup__close-button_type_edit" type="button" aria-label="Закрыть"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form popup__form_type_edit-profile" name="popupFormEditProfile">
+          <form class="popup__form popup__form_type_edit-profile" name="popupFormEditProfile" novalidate>
             <input
+              id="userName-input"
               class="popup__userinfo popup__userinfo_info_username"
               type="text"
               name="userName"
               required
               placeholder="Ваше имя"
               value=""
+              minlength="2"
+              maxlength="40"
+              autocomplete="off"
             />
+            <span class="userName-input-error popup__form-input-error"></span>
             <input
+              id="userNameInfo-input"
               class="popup__userinfo popup__userinfo_info_user-about"
               type="text"
               name="userNameInfo"
               required
               placeholder="О себе"
               value=""
+              minlength="2"
+              maxlength="200"
+              autocomplete="off"
             />
+            <span class="userNameInfo-input-error popup__form-input-error"></span>
             <button class="popup__submit-button popup__submit-button_type_edit" type="submit" aria-label="Сохранить">Сохранить</button>
           </form>
         </div>
@@ -75,21 +85,29 @@
           <h2 class="popup__title">Новое место</h2>
           <form class="popup__form popup__form_type_add-card" name="popupFormAddCard">
             <input
+              id="cardName-input"
               class="popup__userinfo popup__userinfo_card_name"
               type="text"
               name="cardName"
               required
               placeholder="Название"
               value=""
+              minlength="2"
+              maxlength="30"
+              autocomplete="off"
             />
+            <span class="cardName-input-error popup__form-input-error"></span>
             <input
+              id="cardLink-input"
               class="popup__userinfo popup__userinfo_card_link"
               type="url"
               name="cardLink"
               required
               placeholder="Ссылка на картинку"
               value=""
+              autocomplete="off"
             />
+            <span class="cardLink-input-error popup__form-input-error"></span>
             <button class="popup__submit-button popup__submit-button_type_add" type="submit" aria-label="Создать">Создать</button>
           </form>
         </div>
@@ -116,7 +134,8 @@
         <button class="card__btn-del" type="button" aria-label="Удалить"></button>
       </article>
     </template>
-    <script src="./scripts/cards.js"></script> 
+    <script src="./scripts/cards.js"></script>
+    <script src="./scripts/validate.js"></script> 
     <script src="./scripts/index.js"></script>
   </body>
 </html>
