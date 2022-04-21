@@ -7,18 +7,31 @@ const validationConfig = {
   errorClass: 'popup__form-input-error_visible',
 };
 
-const showInputError = (formElement, inputElement, errorMessage, {inputErrorClass, errorClass, ...rest}) => {
+const showInputError = (formElement, inputElement, errorMessage, {inputErrorClass, errorClass}) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(errorClass);
 };
 
-const hideInputError = (formElement, inputElement, {inputErrorClass, errorClass, ...rest}) => {
+const hideInputError = (formElement, inputElement, {inputErrorClass, errorClass}) => {
+  // Находим спан с ошибкой по id инпута
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  // у инпута удаляем ненужный класс( убираем красное подчеркивание)
   inputElement.classList.remove(inputErrorClass);
+  // у спана удаляем ненужный класс (делаем его снова невидимым)
   errorElement.classList.remove(errorClass);
+  // у спана обнуляем значение самого текстового поля 
   errorElement.textContent = '';
+};
+const resetFormValidation = (formElement, {inputSelector, ...rest}) => {
+  // Находим все поля внутри формы, сделаем из них массив
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  // Обойдём все элементы полученного массива
+  inputList.forEach((inputElement) => {
+    // для каждого элемента вызываем функцию hideInputError
+    hideInputError(formElement, inputElement, rest);
+  });
 };
 
 const isValid = (formElement, inputElement, validationConfig) => {
@@ -58,10 +71,13 @@ const enableButtonSubmit = (buttonElement) => {
 
 // Дезактивирование кнопок Submit в попапах
 
-const disableButtonSubmit = (buttonElement) =>{
+const disableButtonSubmit = (buttonElement) => {
   buttonElement.classList.add(validationConfig.inactiveButtonClass);
   buttonElement.disabled = true;
 }
+
+
+
 
 // Функция принимает массив полей
 

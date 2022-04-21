@@ -80,7 +80,6 @@ function openPopup(popup) {
 function openPopupProfile() {
   usernameInput.value = profileUsername.textContent;
   userAboutInput.value = profileUserAbout.textContent;
-  enableButtonSubmit(buttonSubmitTypeEdit);
   openPopup(popupEditProfile);
 }
 
@@ -121,6 +120,7 @@ function submitFormEditProfile(evt) {
   profileUsername.textContent = usernameInput.value;
   profileUserAbout.textContent = userAboutInput.value;
   closePopup(popupEditProfile);
+  
 }
 
 // функция  ввода данных через попап и добавления карточки
@@ -132,10 +132,8 @@ function submitFormAddCard(evt) {
     link: cardLinkInput.value 
   };
   renderCard(createCard(card));
-  cardNameInput.value = '';
-  cardLinkInput.value = '';
+  formElementAddCard.reset();
   closePopup(popupAddCard);
-  disableButtonSubmit(buttonSubmitTypeAdd);
 }
 
 popupList.forEach((popupElement) => {
@@ -146,9 +144,14 @@ formElementEditProfile.addEventListener('submit', submitFormEditProfile);
 formElementAddCard.addEventListener('submit', submitFormAddCard);
 
 popupOpenEditBtn.addEventListener('click', function () {
+  resetFormValidation(formElementEditProfile, validationConfig);
+  enableButtonSubmit(buttonSubmitTypeEdit);
   openPopupProfile(popupEditProfile);
 });
 popupOpenAddBtn.addEventListener('click', function () {
+  resetFormValidation(formElementAddCard, validationConfig);
+  formElementAddCard.reset();
+  disableButtonSubmit(buttonSubmitTypeAdd);
   openPopup(popupAddCard);
 });
 
@@ -163,3 +166,4 @@ popupCloseZoomBtn.addEventListener('click', function () {
 });
 
 initialCards.forEach(card => renderCard(createCard(card)));
+
