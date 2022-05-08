@@ -8,6 +8,7 @@
   object-position: center;
   overflow: hidden;
   border: none;
+  color: #000000;
 }
 
 .card__image:hover {

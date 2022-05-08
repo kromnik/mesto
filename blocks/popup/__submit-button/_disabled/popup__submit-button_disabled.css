@@ -3,4 +3,10 @@
   color: #000000;
   background-color: transparent;
   border: 1px solid rgba(0, 0, 0);
+  transition: opacity;
+}
+
+.popup__submit-button_disabled:hover {
+  cursor: default;
+  opacity: .2;
 }
