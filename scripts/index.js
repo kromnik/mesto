@@ -119,12 +119,11 @@ formElementAddCard.addEventListener('submit', submitFormAddCard);
 
 popupOpenEditBtn.addEventListener('click', function () {
   formValidatorEditProfile.resetFormValidation();
-  formValidatorEditProfile.enableButtonSubmit();
   openPopupProfile(popupEditProfile);
 });
 popupOpenAddBtn.addEventListener('click', function () {
-  formValidatorAddCard.resetFormValidation();
   formElementAddCard.reset();
+  formValidatorAddCard.resetFormValidation();
   openPopup(popupAddCard);
 });
 
