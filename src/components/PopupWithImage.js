@@ -3,8 +3,8 @@ import Popup from "./Popup.js";
 export default class PopupWithImage extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
-    this._cardImageZoom =  this._popupSelector.querySelector('.popup__image-zoom');
-    this._cardImageZoomDescription =  this._popupSelector.querySelector('.popup__image-zoom-description');
+    this._cardImageZoom =  document.querySelector('.popup__image-zoom');
+    this._cardImageZoomDescription =  document.querySelector('.popup__image-zoom-description');
   };
 
   open(link, name) {
