@@ -4,7 +4,6 @@
   background-color: #fff;
   max-width: 430px;
   width: 100%;
-  min-height: 330px;
   margin: 0 auto;
   padding: 0;
   display: flex;
@@ -15,6 +14,5 @@
 @media screen and (max-width: 1279px) {
   .popup__container {
     max-width: 282px;
-    min-height: 322px;
   }
 }

@@ -7,10 +7,10 @@ export default class PopupWithImage extends Popup {
     this._cardImageZoomDescription =  document.querySelector('.popup__image-zoom-description');
   };
 
-  open(link, name) {
-      this._cardImageZoom.src = link;
-      this._cardImageZoomDescription.textContent = name;
-      this._cardImageZoom.alt = "увеличенное фото " + name;
+  open(data) {
+      this._cardImageZoom.src = data.link;
+      this._cardImageZoomDescription.textContent = data.name;
+      this._cardImageZoom.alt = "увеличенное фото " + data.name;
       super.open();
   };  
 }

@@ -1,4 +1,4 @@
-.card__btn-del {
+.card__btn-delete {
   position: absolute;
   min-width: 18px;
   height: 19px;
@@ -12,9 +12,10 @@
   background-color: transparent;
   border: none;
   transition: opacity .4s;
+  visibility: hidden;
 }
 
-.card__btn-del:hover {
+.card__btn-delete:hover {
   opacity: .5;
   cursor: pointer;
 }
