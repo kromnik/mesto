@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({data, handleClickCard, handleLikeCard, handleDeleteLikeCard, 
+  constructor({data, handleClickCard, handleLikeCard, 
     handleDeleteCard}, cardTemplate, userId) {
     this._name = data.name;
     this._link = data.link;
@@ -8,11 +8,9 @@ export default class Card {
     this._ownerId = data.owner._id;
     this._handleClickCard = handleClickCard;
     this._handleLikeCard = handleLikeCard;
-    this._handleDeleteLikeCard = handleDeleteLikeCard;
     this._handleDeleteCard = handleDeleteCard;
     this._cardTemplate = cardTemplate;
     this._userId = userId;
-    
   };
 
   _getTemplate() {
@@ -33,12 +31,8 @@ export default class Card {
     this._cardBtnDelete = this._card.querySelector('.card__btn-delete');
     
     this._cardLikeIcon.addEventListener('click', () => {
-      if (this._cardLikeIcon.classList.contains('card__like-icon_action_like')) {
-        this._dislikeCard(this._cardId);
-      } else {
-        this._likeCard(this._cardId);
-      }
-    })
+        this._handleLikeCard(this._cardId); 
+    });
     
     this._cardBtnDelete.addEventListener('click', () => {
       this._handleDeleteCard(this._cardId);
@@ -47,33 +41,32 @@ export default class Card {
     this._cardImage.addEventListener('click', () => {
       this._handleClickCard(this._link, this._name);
     });
+  };
 
-    this._cardBtnDelete.classList.add
-    (this._userId === this._ownerId ? 'card__btn-delete_action_visible' : 'card__btn-delete');
+  setLikeCountCard(data) {
+    this._likes = data.likes;
+    this.likeCountCard();
+    this._updateLikeCard();
   };
 
   likeCountCard() {
     this._cardLikeCount.textContent = this._likes.length;
   };
 
-  _likeCard(data) {
-    this._handleLikeCard(data);
-    this._cardLikeIcon.classList.add('card__like-icon_action_like');
-  }
+  isLiked() {
+    return Boolean(this._likes.find(item => item._id === this._userId));
+  };
 
-  _dislikeCard(data) {
-    this._handleDeleteLikeCard(data);
-    this._cardLikeIcon.classList.remove('card__like-icon_action_like');
-  }
-
-  // _handleLikeCardToggle() {
-  //   this._cardLikeIcon.classList.toggle('card__like-icon_action_like');
-  // };
-
-  handleDeleteCard(data) {
-    if (this._userId === this._ownerId) {
-    this._card.remove(data);
+  handleDeleteCard() {
+    this._card.remove();
     this._card = null;
+  };
+
+  _updateLikeCard() {
+    if (this.isLiked()) {
+      this._cardLikeIcon.classList.add('card__like-icon_action_like');
+    } else {
+      this._cardLikeIcon.classList.remove('card__like-icon_action_like');
     }
   };
 
@@ -81,10 +74,14 @@ export default class Card {
     this._card = this._getTemplate();
     this._setEventListeners();
     this.likeCountCard();
+    this._updateLikeCard();
 
     this._cardImage.src = this._link;
     this._cardName.textContent = this._name;
     this._cardImage.alt = "фото " + this._name;
+
+    this._cardBtnDelete.classList.add
+    (this._ownerId === this._userId? 'card__btn-delete_action_visible' : 'card__btn-delete');
     
     return this._card;
   };
