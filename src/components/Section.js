@@ -1,7 +1,7 @@
 export default class Section {
-  constructor({ renderer }, containerSelector) {
+  constructor({ renderer }, cardElements) {
     this._renderer = renderer;
-    this._container = containerSelector;
+    this._container = cardElements;
   };
 
   renderItems(cardsData) {
@@ -10,10 +10,10 @@ export default class Section {
     });
   };
 
-  addItem(element, place) {
-    if (place === "append") {
-      this._container.append(element)
-    } else {
+  addItem(element, place) { 
+    if (place === "append") { 
+      this._container.append(element) 
+    } else { 
       this._container.prepend(element)  
     };
   };  

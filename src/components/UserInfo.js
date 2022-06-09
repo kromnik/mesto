@@ -13,13 +13,9 @@ export default class UserInfo {
     return userInfo;
   };
 
-  setUserAvatar(data) {
-    this._profileUserAvatar.src = data.avatar;
-  }
-
   setUserInfo(data) {
     this._profileUserName.textContent = data.name;
     this._profileUserAbout.textContent = data.about;
-    this.setUserAvatar(data);
+    this._profileUserAvatar.src = data.avatar;
   };
 }

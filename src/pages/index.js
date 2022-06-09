@@ -1,4 +1,21 @@
-import { validationConfig } from "../components/initial.js";
+import { validationConfig as config } from "../utils/initial.js";
+import { 
+  popupEditProfile,
+  popupAddCard,
+  popupZoomImage,
+  popupAvatarEditProfile,
+  popupConfirm,
+  userNameSelector,
+  userAboutSelector,
+  userAvatarSelector,
+  popupOpenEditBtn,
+  popupOpenAddBtn,
+  popupOpenAvatarEditBtn,
+  formElementEditProfile,
+  formElementAddCard,
+  formElementAvatarEditProfile,
+  cardElements
+} from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
@@ -8,29 +25,6 @@ import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import './index.css';
 import PopupWithConfirm from "../components/PopupWithConfirm.js";
-
-//  селекторы
-
-const popupEditProfile = '.popup_edit-profile';
-const popupAddCard = '.popup_add-card';
-const popupZoomImage = '.popup_zoom-photo';
-const popupAvatarEditProfile = '.popup_update-avatar';
-const popupConfirm = '.popup_confirm';
-const userNameSelector = '.profile__profile-info-username';
-const userAboutSelector = '.profile__profile-info-user-about';
-const userAvatarSelector = '.profile__avatar';
-
-// элементы
-
-const popupOpenEditBtn = document.querySelector('.profile__edit-button');
-const popupOpenAddBtn = document.querySelector('.profile__add-button');
-const popupOpenAvatarEditBtn = document.querySelector('.profile__avatar-edit-button');
-const formElementEditProfile = document.querySelector('.popup__form_type_edit-profile');
-const userNameInput = formElementEditProfile.querySelector('.popup__userinfo_info_username');
-const userAboutInput = formElementEditProfile.querySelector('.popup__userinfo_info_user-about');
-const formElementAddCard = document.querySelector('.popup__form_type_add-card');
-const formElementAvatarEditProfile = document.querySelector('.popup__form_type_update-avatar');
-const cardElements = document.querySelector('.elements');
 
 let userId = null;
 let currentCard = null;
@@ -109,13 +103,13 @@ const popupWithConfirmElement = new PopupWithConfirm({
     api.deleteCard(data)
       .then(() => {
         currentCard.handleDeleteCard();
+        popupWithConfirmElement.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
         popupWithConfirmElement.renderLoading(false);
-        popupWithConfirmElement.close();
       })
   }
 });
@@ -131,23 +125,22 @@ const popupEditProfileElement = new PopupWithForm({
     api.setUserInfoApi(data)
       .then((data) => {
         userInfo.setUserInfo(data);
+        popupEditProfileElement.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        popupEditProfileElement.renderLoading(false);
-        popupEditProfileElement.close();
+        popupEditProfileElement.renderLoading(false);   
       })
   }
 });
 popupEditProfileElement.setEventListeners();
 
 popupOpenEditBtn.addEventListener('click', () => {
-  formValidatorEditProfile.resetFormValidation();
+  formValidators[ formElementEditProfile.getAttribute('name') ].resetFormValidation();
   const userData = userInfo.getUserInfo();
-  userNameInput.value = userData.name;
-  userAboutInput.value = userData.about;
+  popupEditProfileElement.setInputValues(userData);
   popupEditProfileElement.open();
 });
 
@@ -157,21 +150,21 @@ const popupAvatarEditProfileElement = new PopupWithForm({
     popupAvatarEditProfileElement.renderLoading(true);
     api.setUserAvatarApi(data)
       .then((data) => {
-        userInfo.setUserAvatar(data);
+        userInfo.setUserInfo(data);
+        popupAvatarEditProfileElement.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        popupAvatarEditProfileElement.renderLoading(false);
-        popupAvatarEditProfileElement.close();
+        popupAvatarEditProfileElement.renderLoading(false);       
       })
   }
 });
 popupAvatarEditProfileElement.setEventListeners();
 
 popupOpenAvatarEditBtn.addEventListener('click', () => {
-  formValidatorAvatarEditProfile.resetFormValidation();
+  formValidators[ formElementAvatarEditProfile.getAttribute('name') ].resetFormValidation();
   popupAvatarEditProfileElement.open();
 });
 
@@ -182,29 +175,34 @@ const popupAddCardElement = new PopupWithForm({
       api.postCard(data)
         .then((data) => {
           cardsList.addItem(createCard(data), 'prepend');
+          popupAddCardElement.close();
         })
         .catch((err) => {
           console.log(err);
         })
         .finally(() => {
-          popupAddCardElement.renderLoading(false);
-          popupAddCardElement.close();
+          popupAddCardElement.renderLoading(false);         
         })
     }
   });
 popupAddCardElement.setEventListeners();  
 
 popupOpenAddBtn.addEventListener('click', () => {
-  formValidatorAddCard.resetFormValidation();
+  formValidators[ formElementAddCard.getAttribute('name') ].resetFormValidation();
   popupAddCardElement.open();
 });
 
-const formValidatorEditProfile = new FormValidator(validationConfig, formElementEditProfile);
-formValidatorEditProfile.enableValidation();
+const formValidators = {};
 
-const formValidatorAddCard = new FormValidator(validationConfig, formElementAddCard);
-formValidatorAddCard.enableValidation();
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute('name');
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
 
-const formValidatorAvatarEditProfile = new FormValidator(validationConfig, formElementAvatarEditProfile);
-formValidatorAvatarEditProfile.enableValidation();
+enableValidation(config);
 
